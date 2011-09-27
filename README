@@ -1,0 +1,24 @@
+Asset Manager Client library
+Created by Toshiro Yamada
+
+Overview: 
+This library provides a simple API for communicating with Tahakum Asset Manager framework. The user does not need to be aware of the Open Sound Control protocol or what kind of messages needs to be sent to control basic features. Additionally, custom Open Sound Control messages can be sent over UDP and TCP to a project using a printf-like function.
+
+Compile:
+CMake 2.8 and higher is necessary to compile the library. In-source compilation is not allowed. In other word, create a directory (e.g. "build") inside the root source and pass the path to the source directory as an argument to cmake. On Unix, this looks something like:
+
+$ cd AssetManagerClient
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+
+Installation:
+Copy the header and library files to your desired location. The one and only header is located inside include. The library, libamclient, is located inside the build directory.
+
+Usage:
+Create a single instance of am::AssetManagerClient for a project. When constructing am::AssetManagerClient, set project's base Open Sound Control address, hostname or IP where the Asset Manager server is running, and optionally ports for TCP and UDP. Default port should be used in most cases unless there is conflict.
+
+Example: 
+Look at main_test.cpp inside tests for code example.
+

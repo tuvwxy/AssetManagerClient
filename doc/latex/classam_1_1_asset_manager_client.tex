@@ -1,0 +1,405 @@
+\hypertarget{classam_1_1_asset_manager_client}{
+\section{am::AssetManagerClient Class Reference}
+\label{classam_1_1_asset_manager_client}\index{am::AssetManagerClient@{am::AssetManagerClient}}
+}
+
+
+Simple interface for interacting with Asset Manager server.  
+
+
+
+
+{\ttfamily \#include $<$asset\_\-manager\_\-client.hpp$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204}{Option} \{ \hyperlink{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204afbddc98293c73fb9327140202446bcd3}{CORE\_\-USE\_\-UDP} =  1 $<$$<$ 0, 
+\hyperlink{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204a12d66e04635284dd63ade2bac119a6df}{SEND\_\-UNLOAD\_\-IN\_\-DESTRUCTOR} =  1 $<$$<$ 1, 
+\hyperlink{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204a8572f40c3d36da034eb81a13e04eab23}{DONOT\_\-CLEAR\_\-QUEUE\_\-IN\_\-DESTRUCTOR} =  1 $<$$<$ 2
+ \}
+\begin{DoxyCompactList}\small\item\em Options to change internal behavior of the class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classam_1_1_asset_manager_client_aef19f13fdc5939ddb53ec80f79f7dc1f}{AssetManagerClient} (const std::string \&base\_\-address, const std::string \&host, long tcp\_\-port=TCP\_\-PORT, long udp\_\-port=UDP\_\-PORT)
+\begin{DoxyCompactList}\small\item\em Constructor of {\itshape \hyperlink{classam_1_1_asset_manager_client}{AssetManagerClient}\/}. \end{DoxyCompactList}\item 
+\hyperlink{classam_1_1_asset_manager_client_af815a4a3a82b47ba39fa688819d5cb3d}{$\sim$AssetManagerClient} ()
+\begin{DoxyCompactList}\small\item\em Destructor of {\itshape \hyperlink{classam_1_1_asset_manager_client}{AssetManagerClient}\/}. \end{DoxyCompactList}\item 
+void \hyperlink{classam_1_1_asset_manager_client_a9b305a3d9362bdacbf0b676df39474c5}{SetOption} (\hyperlink{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204}{Option} option)
+\begin{DoxyCompactList}\small\item\em Set option to change internal behavior. \end{DoxyCompactList}\item 
+void \hyperlink{classam_1_1_asset_manager_client_a42894c6bff07e22fb9598e1c089779a6}{SetSystemMute} (bool mute)
+\begin{DoxyCompactList}\small\item\em Mute or unmute Asset Manager. \end{DoxyCompactList}\item 
+void \hyperlink{classam_1_1_asset_manager_client_a22b644bd78df97d01a08ef4d36bd60bc}{SetSystemVolume} (float volume)
+\begin{DoxyCompactList}\small\item\em Set overall volume of Asset Manager. \end{DoxyCompactList}\item 
+void \hyperlink{classam_1_1_asset_manager_client_a185b1f7d9a2953b05699dcc9cdfc8a6c}{Load} ()
+\begin{DoxyCompactList}\small\item\em Load project in Asset Manager. \end{DoxyCompactList}\item 
+void \hyperlink{classam_1_1_asset_manager_client_ac738859d526f37cc1a708d5d4f8f2de3}{Unload} ()
+\begin{DoxyCompactList}\small\item\em Unload project in Asset Manager. \end{DoxyCompactList}\item 
+void \hyperlink{classam_1_1_asset_manager_client_aaf7ae48f7234fcc98f9c5e15dad4c46c}{SetMute} (bool mute)
+\begin{DoxyCompactList}\small\item\em Mute or unmute project. \end{DoxyCompactList}\item 
+void \hyperlink{classam_1_1_asset_manager_client_a0aacdcf0ab177994980ea5a28d368292}{SetVolume} (float volume)
+\begin{DoxyCompactList}\small\item\em Set project volume. \end{DoxyCompactList}\item 
+void \hyperlink{classam_1_1_asset_manager_client_ae926351a13831b539c185e2ec4f7a9d9}{SendCustomTCP} (const std::string \&url, const char $\ast$format,...)
+\begin{DoxyCompactList}\small\item\em Send custom TCP message to the project. \end{DoxyCompactList}\item 
+void \hyperlink{classam_1_1_asset_manager_client_a547f6a9f9acdf7318c47640099cff091}{SendCustomUDP} (const std::string \&url, const char $\ast$format,...)
+\begin{DoxyCompactList}\small\item\em Send custom UDP message to the project. \end{DoxyCompactList}\item 
+void \hyperlink{classam_1_1_asset_manager_client_aa3915a3098877eb926859b978309f872}{StartBundle} ()
+\begin{DoxyCompactList}\small\item\em Mark the start of a new bundle. \end{DoxyCompactList}\item 
+void \hyperlink{classam_1_1_asset_manager_client_a53e3932c674527bb7568c2de594db296}{EndBundle} ()
+\begin{DoxyCompactList}\small\item\em Mark the end of the bundle and send it over the network. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Simple interface for interacting with Asset Manager server. 
+
+\hyperlink{classam_1_1_asset_manager_client}{AssetManagerClient} can control basic parameters of Asset Manager server and manage a project. The API is simple and uses asynchronous sockets; i.e. function calls do not block. (Except for the destructor. See {\itshape $\sim$AssetManagerClient\/} for more details.) Interntally, \hyperlink{classam_1_1_asset_manager_client}{AssetManagerClient} uses Boost ASIO library for handling asynchronous TCP and UDP networking. 
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204}{
+\index{am::AssetManagerClient@{am::AssetManagerClient}!Option@{Option}}
+\index{Option@{Option}!am::AssetManagerClient@{am::AssetManagerClient}}
+\subsubsection[{Option}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf am::AssetManagerClient::Option}}}
+\label{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204}
+
+
+Options to change internal behavior of the class. 
+
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{CORE\_\-USE\_\-UDP@{CORE\_\-USE\_\-UDP}!am::AssetManagerClient@{am::AssetManagerClient}}\index{am::AssetManagerClient@{am::AssetManagerClient}!CORE\_\-USE\_\-UDP@{CORE\_\-USE\_\-UDP}}\item[{\em 
+\hypertarget{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204afbddc98293c73fb9327140202446bcd3}{
+CORE\_\-USE\_\-UDP}
+\label{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204afbddc98293c73fb9327140202446bcd3}
+}]Use UDP instead of TCP (default) for sending core messages. \index{SEND\_\-UNLOAD\_\-IN\_\-DESTRUCTOR@{SEND\_\-UNLOAD\_\-IN\_\-DESTRUCTOR}!am::AssetManagerClient@{am::AssetManagerClient}}\index{am::AssetManagerClient@{am::AssetManagerClient}!SEND\_\-UNLOAD\_\-IN\_\-DESTRUCTOR@{SEND\_\-UNLOAD\_\-IN\_\-DESTRUCTOR}}\item[{\em 
+\hypertarget{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204a12d66e04635284dd63ade2bac119a6df}{
+SEND\_\-UNLOAD\_\-IN\_\-DESTRUCTOR}
+\label{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204a12d66e04635284dd63ade2bac119a6df}
+}]Send a {\itshape Unload\/} message in destructor. \index{DONOT\_\-CLEAR\_\-QUEUE\_\-IN\_\-DESTRUCTOR@{DONOT\_\-CLEAR\_\-QUEUE\_\-IN\_\-DESTRUCTOR}!am::AssetManagerClient@{am::AssetManagerClient}}\index{am::AssetManagerClient@{am::AssetManagerClient}!DONOT\_\-CLEAR\_\-QUEUE\_\-IN\_\-DESTRUCTOR@{DONOT\_\-CLEAR\_\-QUEUE\_\-IN\_\-DESTRUCTOR}}\item[{\em 
+\hypertarget{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204a8572f40c3d36da034eb81a13e04eab23}{
+DONOT\_\-CLEAR\_\-QUEUE\_\-IN\_\-DESTRUCTOR}
+\label{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204a8572f40c3d36da034eb81a13e04eab23}
+}]Do not clear message queues in destructor, avoiding blocking. \end{description}
+\end{Desc}
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classam_1_1_asset_manager_client_aef19f13fdc5939ddb53ec80f79f7dc1f}{
+\index{am::AssetManagerClient@{am::AssetManagerClient}!AssetManagerClient@{AssetManagerClient}}
+\index{AssetManagerClient@{AssetManagerClient}!am::AssetManagerClient@{am::AssetManagerClient}}
+\subsubsection[{AssetManagerClient}]{\setlength{\rightskip}{0pt plus 5cm}am::AssetManagerClient::AssetManagerClient (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{base\_\-address, }
+\item[{const std::string \&}]{host, }
+\item[{long}]{tcp\_\-port = {\ttfamily TCP\_\-PORT}, }
+\item[{long}]{udp\_\-port = {\ttfamily UDP\_\-PORT}}
+\end{DoxyParamCaption}
+)}}
+\label{classam_1_1_asset_manager_client_aef19f13fdc5939ddb53ec80f79f7dc1f}
+
+
+Constructor of {\itshape \hyperlink{classam_1_1_asset_manager_client}{AssetManagerClient}\/}. 
+
+Create an \hyperlink{classam_1_1_asset_manager_client}{AssetManagerClient} with a specified Open Sound Control base address and address of the host computer. {\itshape base\_\-address\/} is associated with the Asset Manager project and should be unique. (No other Asset Manager project should be associated with the same {\itshape base\_\-address\/}.) Optionally, destination TCP and UDP ports can be specified if Asset Manager is running on a non-\/default ports.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em base\_\-address} & Base Open Sound Control address. Custom Open Sound Control messages sent through SendCustomTCP and SendCustomUDP will have the address prefixed with this base address. \\
+\hline
+\mbox{\tt in}  & {\em host} & Address of the computer running Asset Manager. \\
+\hline
+\mbox{\tt in}  & {\em tcp\_\-port} & (Optional) Destination TCP port. \\
+\hline
+\mbox{\tt in}  & {\em udp\_\-port} & (Optional) Destination UDP port. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classam_1_1_asset_manager_client_af815a4a3a82b47ba39fa688819d5cb3d}{
+\index{am::AssetManagerClient@{am::AssetManagerClient}!$\sim$AssetManagerClient@{$\sim$AssetManagerClient}}
+\index{$\sim$AssetManagerClient@{$\sim$AssetManagerClient}!am::AssetManagerClient@{am::AssetManagerClient}}
+\subsubsection[{$\sim$AssetManagerClient}]{\setlength{\rightskip}{0pt plus 5cm}am::AssetManagerClient::$\sim$AssetManagerClient (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classam_1_1_asset_manager_client_af815a4a3a82b47ba39fa688819d5cb3d}
+
+
+Destructor of {\itshape \hyperlink{classam_1_1_asset_manager_client}{AssetManagerClient}\/}. 
+
+If option {\itshape SEND\_\-UNLOAD\_\-IN\_\-DESTRUCTOR\/} is set, {\itshape Unload\/} is called. By default, the function blocks until all TCP and UDP message queue are cleared. The function will return immediately if option {\itshape DONOT\_\-CLEAR\_\-QUEUE\_\-IN\_\-DESTRUCTOR\/} is set. Note that if both {\itshape SEND\_\-UNLOAD\_\-IN\_\-DESTRUCTOR\/} and {\itshape DONOT\_\-CLEAR\_\-QUEUE\_\-IN\_\-DESTRUCTOR\/} are set, {\itshape Unload\/} message may most likely not be delivered successfully. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classam_1_1_asset_manager_client_a53e3932c674527bb7568c2de594db296}{
+\index{am::AssetManagerClient@{am::AssetManagerClient}!EndBundle@{EndBundle}}
+\index{EndBundle@{EndBundle}!am::AssetManagerClient@{am::AssetManagerClient}}
+\subsubsection[{EndBundle}]{\setlength{\rightskip}{0pt plus 5cm}void am::AssetManagerClient::EndBundle (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classam_1_1_asset_manager_client_a53e3932c674527bb7568c2de594db296}
+
+
+Mark the end of the bundle and send it over the network. 
+
+Consecutive call to {\itshape EndBundle\/} without a call to {\itshape Start\/} Bundle has no effect. See {\itshape StartBundle\/} for more information.
+
+\begin{DoxySeeAlso}{See also}
+{\itshape \hyperlink{classam_1_1_asset_manager_client_aa3915a3098877eb926859b978309f872}{StartBundle}\/} 
+\end{DoxySeeAlso}
+\hypertarget{classam_1_1_asset_manager_client_a185b1f7d9a2953b05699dcc9cdfc8a6c}{
+\index{am::AssetManagerClient@{am::AssetManagerClient}!Load@{Load}}
+\index{Load@{Load}!am::AssetManagerClient@{am::AssetManagerClient}}
+\subsubsection[{Load}]{\setlength{\rightskip}{0pt plus 5cm}void am::AssetManagerClient::Load (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classam_1_1_asset_manager_client_a185b1f7d9a2953b05699dcc9cdfc8a6c}
+
+
+Load project in Asset Manager. 
+
+This function should be called to start a proejct. Non-\/system calls will not take effect if a project is not loaded. If a project is large, loading maye take time (in Asset Manager) and non-\/system call may not take effect immediately. Moreover, if a project is set to \char`\"{}auto load\char`\"{} in Asset Manager, a call to {\itshape Load\/} is unecessary (and is ignored) because the project should already be loaded.
+
+\begin{DoxySeeAlso}{See also}
+{\itshape \hyperlink{classam_1_1_asset_manager_client_ac738859d526f37cc1a708d5d4f8f2de3}{Unload}\/} 
+\end{DoxySeeAlso}
+\hypertarget{classam_1_1_asset_manager_client_ae926351a13831b539c185e2ec4f7a9d9}{
+\index{am::AssetManagerClient@{am::AssetManagerClient}!SendCustomTCP@{SendCustomTCP}}
+\index{SendCustomTCP@{SendCustomTCP}!am::AssetManagerClient@{am::AssetManagerClient}}
+\subsubsection[{SendCustomTCP}]{\setlength{\rightskip}{0pt plus 5cm}void am::AssetManagerClient::SendCustomTCP (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{url, }
+\item[{const char $\ast$}]{format, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}
+\label{classam_1_1_asset_manager_client_ae926351a13831b539c185e2ec4f7a9d9}
+
+
+Send custom TCP message to the project. 
+
+This function may be used to send custom Open Sound Control messages to the project. OSC address is prefixed with base\_\-address set when constructing {\itshape \hyperlink{classam_1_1_asset_manager_client}{AssetManagerClient}\/}. TCP guarantees delivery (if a connection is valid) and therefore this function should be preferred over {\itshape SendCustomUDP\/} when such guarantee is desirable. For time-\/sensitive and frequently updated messages (such as sound object locations), use {\itshape SendCustomUDP\/}.
+
+Note that when mixing calls to {\itshape SendCustomTCP\/} and {\itshape SendCustomUDP\/}, messages order is guaranteed and should not be expected. For example, if {\itshape SendCustomUDP\/} is called right after {\itshape SendCustomTCP\/}, the UDP message is likely to arrive before the TCP message (although that also depends). Therefore, if order of arrival is important, use only {\itshape SendCustomTCP\/}.
+
+The arguments are similar to printf-\/like functions. {\itshape format\/} specifies the number of arguments and their types, and the appropriate number of arguments are specified right afterwrds.
+
+Following types allowed:
+\begin{DoxyItemize}
+\item i: 32-\/bit integer number
+\item h: 64-\/bit integer number
+\item f: 32-\/bit floating point number
+\item d: 64-\/bit floating point number
+\item s: string ({\ttfamily char}\mbox{[}\mbox{]}, NOT {\ttfamily std::string})
+\item c: ASCII character
+\item T: True (No argument required)
+\item F: False (No argument required)
+\item N: Nil (No argument required)
+\item I: Infinitum (No argument required)
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em url} & OSC's URL address of the message. \\
+\hline
+\mbox{\tt in}  & {\em format} & A character string representing OSC argument types. \\
+\hline
+\mbox{\tt in}  & {\em ...} & Arguments that match with the type specified in {\itshape format\/}.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyCode}
+   AssetManagerClient am("/test", "127.0.0.1");
+   am.SendCustomTCP("/cue", "i", 12); // send an integer value
+   am.SendCustomTCP("/bang", "I"); // send an infinitum
+
+   float x, y, z;
+   ...
+   am.SendCustomTCP("/object/pos", "fff", x, y, z); // send three floats
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+{\itshape \hyperlink{classam_1_1_asset_manager_client_a547f6a9f9acdf7318c47640099cff091}{SendCustomUDP}\/} 
+\end{DoxySeeAlso}
+\hypertarget{classam_1_1_asset_manager_client_a547f6a9f9acdf7318c47640099cff091}{
+\index{am::AssetManagerClient@{am::AssetManagerClient}!SendCustomUDP@{SendCustomUDP}}
+\index{SendCustomUDP@{SendCustomUDP}!am::AssetManagerClient@{am::AssetManagerClient}}
+\subsubsection[{SendCustomUDP}]{\setlength{\rightskip}{0pt plus 5cm}void am::AssetManagerClient::SendCustomUDP (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{url, }
+\item[{const char $\ast$}]{format, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}
+\label{classam_1_1_asset_manager_client_a547f6a9f9acdf7318c47640099cff091}
+
+
+Send custom UDP message to the project. 
+
+UDP variant of {\itshape SendCustomTCP\/}. See {\itshape SendCustomTCP\/} for more details.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em url} & OSC's URL address of the message. \\
+\hline
+\mbox{\tt in}  & {\em format} & A character string representing OSC argument types. \\
+\hline
+\mbox{\tt in}  & {\em ...} & Arguments that match with the type specified in {\itshape format\/}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+{\itshape \hyperlink{classam_1_1_asset_manager_client_ae926351a13831b539c185e2ec4f7a9d9}{SendCustomTCP}\/} 
+\end{DoxySeeAlso}
+\hypertarget{classam_1_1_asset_manager_client_aaf7ae48f7234fcc98f9c5e15dad4c46c}{
+\index{am::AssetManagerClient@{am::AssetManagerClient}!SetMute@{SetMute}}
+\index{SetMute@{SetMute}!am::AssetManagerClient@{am::AssetManagerClient}}
+\subsubsection[{SetMute}]{\setlength{\rightskip}{0pt plus 5cm}void am::AssetManagerClient::SetMute (
+\begin{DoxyParamCaption}
+\item[{bool}]{mute}
+\end{DoxyParamCaption}
+)}}
+\label{classam_1_1_asset_manager_client_aaf7ae48f7234fcc98f9c5e15dad4c46c}
+
+
+Mute or unmute project. 
+
+Muting the project will stop the audio signal processing and effectively mute the proejct. This also reduces the processing load in Asset Manager and may be used to balance multiple projects simultaneously. This may be favorable if multiple large projects are hosted on Asset Manager and load time of the projects interferes with quickly switching between thep pojects.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em mute} & {\ttfamily true} to mute, {\ttfamily false} to unmute.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+{\itshape \hyperlink{classam_1_1_asset_manager_client_a42894c6bff07e22fb9598e1c089779a6}{SetSystemMute}\/} 
+\end{DoxySeeAlso}
+\hypertarget{classam_1_1_asset_manager_client_a9b305a3d9362bdacbf0b676df39474c5}{
+\index{am::AssetManagerClient@{am::AssetManagerClient}!SetOption@{SetOption}}
+\index{SetOption@{SetOption}!am::AssetManagerClient@{am::AssetManagerClient}}
+\subsubsection[{SetOption}]{\setlength{\rightskip}{0pt plus 5cm}void am::AssetManagerClient::SetOption (
+\begin{DoxyParamCaption}
+\item[{{\bf Option}}]{option}
+\end{DoxyParamCaption}
+)}}
+\label{classam_1_1_asset_manager_client_a9b305a3d9362bdacbf0b676df39474c5}
+
+
+Set option to change internal behavior. 
+
+Multiple options can be set by using the bitwise OR ($|$). Once the option is set, it cannot be removed.
+
+\begin{DoxySeeAlso}{See also}
+{\ttfamily enum} {\itshape \hyperlink{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204}{Option}\/} 
+\end{DoxySeeAlso}
+\hypertarget{classam_1_1_asset_manager_client_a42894c6bff07e22fb9598e1c089779a6}{
+\index{am::AssetManagerClient@{am::AssetManagerClient}!SetSystemMute@{SetSystemMute}}
+\index{SetSystemMute@{SetSystemMute}!am::AssetManagerClient@{am::AssetManagerClient}}
+\subsubsection[{SetSystemMute}]{\setlength{\rightskip}{0pt plus 5cm}void am::AssetManagerClient::SetSystemMute (
+\begin{DoxyParamCaption}
+\item[{bool}]{mute}
+\end{DoxyParamCaption}
+)}}
+\label{classam_1_1_asset_manager_client_a42894c6bff07e22fb9598e1c089779a6}
+
+
+Mute or unmute Asset Manager. 
+
+If muted, all projects will be effectively muted.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em mute} & {\ttfamily true} to mute, {\ttfamily false} to unmute.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+{\itshape \hyperlink{classam_1_1_asset_manager_client_aaf7ae48f7234fcc98f9c5e15dad4c46c}{SetMute}\/} 
+\end{DoxySeeAlso}
+\hypertarget{classam_1_1_asset_manager_client_a22b644bd78df97d01a08ef4d36bd60bc}{
+\index{am::AssetManagerClient@{am::AssetManagerClient}!SetSystemVolume@{SetSystemVolume}}
+\index{SetSystemVolume@{SetSystemVolume}!am::AssetManagerClient@{am::AssetManagerClient}}
+\subsubsection[{SetSystemVolume}]{\setlength{\rightskip}{0pt plus 5cm}void am::AssetManagerClient::SetSystemVolume (
+\begin{DoxyParamCaption}
+\item[{float}]{volume}
+\end{DoxyParamCaption}
+)}}
+\label{classam_1_1_asset_manager_client_a22b644bd78df97d01a08ef4d36bd60bc}
+
+
+Set overall volume of Asset Manager. 
+
+This affects all projects output levels and is not recommended to change a specific project volume: use {\itshape SetVolume\/} instead. Value must be between 0 and 1. and out-\/of-\/range values are ignored.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em volume} & Value between 0. and 1., which 0. is silence and 1. is full volume (= 0. dB attenuation).\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+{\itshape \hyperlink{classam_1_1_asset_manager_client_a0aacdcf0ab177994980ea5a28d368292}{SetVolume}\/} 
+\end{DoxySeeAlso}
+\hypertarget{classam_1_1_asset_manager_client_a0aacdcf0ab177994980ea5a28d368292}{
+\index{am::AssetManagerClient@{am::AssetManagerClient}!SetVolume@{SetVolume}}
+\index{SetVolume@{SetVolume}!am::AssetManagerClient@{am::AssetManagerClient}}
+\subsubsection[{SetVolume}]{\setlength{\rightskip}{0pt plus 5cm}void am::AssetManagerClient::SetVolume (
+\begin{DoxyParamCaption}
+\item[{float}]{volume}
+\end{DoxyParamCaption}
+)}}
+\label{classam_1_1_asset_manager_client_a0aacdcf0ab177994980ea5a28d368292}
+
+
+Set project volume. 
+
+Value should be between 0 and 1.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em volume} & Value between 0. and 1., which 0. is silence and 1. is full volume (= 0. dB attenuation).\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+{\itshape \hyperlink{classam_1_1_asset_manager_client_a22b644bd78df97d01a08ef4d36bd60bc}{SetSystemVolume}\/} 
+\end{DoxySeeAlso}
+\hypertarget{classam_1_1_asset_manager_client_aa3915a3098877eb926859b978309f872}{
+\index{am::AssetManagerClient@{am::AssetManagerClient}!StartBundle@{StartBundle}}
+\index{StartBundle@{StartBundle}!am::AssetManagerClient@{am::AssetManagerClient}}
+\subsubsection[{StartBundle}]{\setlength{\rightskip}{0pt plus 5cm}void am::AssetManagerClient::StartBundle (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classam_1_1_asset_manager_client_aa3915a3098877eb926859b978309f872}
+
+
+Mark the start of a new bundle. 
+
+Bundle groups UDP messages into a single packet so the number of packets sent can be minimized. The maximum packet size is limited to 1500 bytes and a bundle cannot be larger than this value. If maximum packet size is reached, the full bundle is sent and a new bundle is created. If {\itshape StartBundle\/} is called consecutively without a call to {\itshape EndBundle\/}, end of bundle is implied and the bundle is sent over the network before a new bundle is created.
+
+Note that bundles have no effect to TCP (stream socket) type and therefore calling {\itshape StartBundle\/} and {\itshape EndBundle\/} around TCP message calls have no effect.
+
+\begin{DoxySeeAlso}{See also}
+{\itshape \hyperlink{classam_1_1_asset_manager_client_a53e3932c674527bb7568c2de594db296}{EndBundle}\/} 
+\end{DoxySeeAlso}
+\hypertarget{classam_1_1_asset_manager_client_ac738859d526f37cc1a708d5d4f8f2de3}{
+\index{am::AssetManagerClient@{am::AssetManagerClient}!Unload@{Unload}}
+\index{Unload@{Unload}!am::AssetManagerClient@{am::AssetManagerClient}}
+\subsubsection[{Unload}]{\setlength{\rightskip}{0pt plus 5cm}void am::AssetManagerClient::Unload (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classam_1_1_asset_manager_client_ac738859d526f37cc1a708d5d4f8f2de3}
+
+
+Unload project in Asset Manager. 
+
+This function should be called to exit a project. Any subsequent non-\/system calls are ignored upon project unload. As in case of {\itshape Load\/}, if a project is set to \char`\"{}auto load\char`\"{} in Asset Manager, a call to {\itshape Unload\/} will not remove the project and hence is ignored. In this case, for example, a custom message should be sent to reset the project to an initial state and {\itshape SetMute\/} should be called to reduce processing load. 
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+include/\hyperlink{asset__manager__client_8hpp}{asset\_\-manager\_\-client.hpp}\end{DoxyCompactItemize}
