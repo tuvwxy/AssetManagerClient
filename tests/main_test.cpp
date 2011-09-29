@@ -1,5 +1,6 @@
 #include "asset_manager_client.hpp"
 
+#include <cstdlib>
 #include <iostream>
 
 #if defined(_WIN32)

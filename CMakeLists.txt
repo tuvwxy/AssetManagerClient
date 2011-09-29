@@ -21,6 +21,10 @@ if(Boost_FOUND)
   set(LINK_LIBRARIES ${LINK_LIBRARIES} ${Boost_LIBRARIES})
 endif()
 
+if (CMAKE_COMPILER_IS_GNUCC)
+  set(CMAKE_C_FLAGS "-std=c99")
+endif()
+
 include_directories(include)
 include_directories(third_party/include)
 add_subdirectory(third_party)

@@ -1,6 +1,9 @@
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 add_library(amclient asset_manager_client.cpp tcp_client.cpp udp_client.cpp)
 target_link_libraries(amclient ${LINK_LIBRARIES} oscpack)
+if (${UNIX})
+  target_link_libraries(amclient pthread)
+endif()
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 add_executable(am_client am_client.cpp)
