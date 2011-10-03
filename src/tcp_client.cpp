@@ -51,12 +51,11 @@ TCPClient::AsyncTCPClient::~AsyncTCPClient()
 void TCPClient::AsyncTCPClient::Connect(
     asio::ip::tcp::resolver::iterator endpoint_iterator)
 {
-  if (!connected_ && !connecting_) {
+  if (!connecting_) {
+    socket_.close();
     connecting_ = true;
-    asio::ip::tcp::endpoint endpoint = *endpoint_iterator;
-    socket_.async_connect(endpoint,
-        boost::bind(&AsyncTCPClient::HandleConnect, this,
-          asio::placeholders::error, ++endpoint_iterator));
+    endpoint_iterator_ = endpoint_iterator;
+    DoConnect();
   }
 }
 
@@ -70,11 +69,23 @@ void TCPClient::AsyncTCPClient::Close()
   io_service_.post(boost::bind(&AsyncTCPClient::DoClose, this));
 }
 
+void TCPClient::AsyncTCPClient::DoConnect()
+{
+  std::cerr << __PRETTY_FUNCTION__ << "\n";
+  asio::ip::tcp::resolver::iterator endpoint_iterator = endpoint_iterator_;
+  asio::ip::tcp::endpoint endpoint = *endpoint_iterator_;
+  socket_.async_connect(endpoint,
+      boost::bind(&AsyncTCPClient::HandleConnect, this,
+        asio::placeholders::error, ++endpoint_iterator));
+}
+
 void TCPClient::AsyncTCPClient::HandleConnect(
     const boost::system::error_code& error,
     asio::ip::tcp::resolver::iterator endpoint_iterator)
 {
+  std::cerr << __PRETTY_FUNCTION__ << "\n";
   if (error) {
+    std::cerr << __PRETTY_FUNCTION__ << ": error\n";
     socket_.close();
     if (endpoint_iterator != asio::ip::tcp::resolver::iterator()) {
       asio::ip::tcp::endpoint endpoint = *endpoint_iterator;
@@ -90,6 +101,7 @@ void TCPClient::AsyncTCPClient::HandleConnect(
       write_progress_cond_.notify_all();
     }
   } else if (connecting_) {
+    std::cerr << __PRETTY_FUNCTION__ << ": success\n";
     connected_ = true;
     connecting_ = false;
     if (!write_in_progress_ && !write_msgs_.empty()) {
@@ -111,7 +123,10 @@ void TCPClient::AsyncTCPClient::HandleConnect(
 
 void TCPClient::AsyncTCPClient::DoSend(const std::vector<char> msg)
 {
-  if (!connected_ && !connecting_) return;
+  if (!connected_ || connecting_) {
+    if (!connecting_) DoConnect();
+    return;
+  }
 
   // construct a message with prefixed length
   std::vector<char> prefixed_msg(msg.size() + 4);
@@ -132,7 +147,9 @@ void TCPClient::AsyncTCPClient::DoSend(const std::vector<char> msg)
 void TCPClient::AsyncTCPClient::HandleWrite(
     const boost::system::error_code& error)
 {
+  std::cerr << __PRETTY_FUNCTION__ << "\n";
   if (!error) {
+    std::cerr << __PRETTY_FUNCTION__ << ": success\n";
     write_msgs_.pop_front();
     if (!write_msgs_.empty()) {
       asio::async_write(socket_,
@@ -147,6 +164,7 @@ void TCPClient::AsyncTCPClient::HandleWrite(
       write_progress_cond_.notify_all();
     }
   } else {
+    std::cerr << __PRETTY_FUNCTION__ << ": error\n";
     {
       boost::lock_guard<boost::mutex> lock(write_progress_mut_);
       write_in_progress_ = false;
@@ -222,6 +240,7 @@ bool TCPClient::RunThread()
 
 void TCPClient::Run()
 {
+  std::cerr << __PRETTY_FUNCTION__ << ": entering\n";
   std::stringstream port_string;
   port_string << port_;
 
@@ -240,5 +259,6 @@ void TCPClient::Run()
   io_service_.reset();
   service_is_ready_ = false;
   thread_is_running_ = false;
+  std::cerr << __PRETTY_FUNCTION__ << ": exiting\n";
 }
 

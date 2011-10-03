@@ -67,6 +67,7 @@ class TCPClient {
     bool Connecting() const { return connecting_; }
 
    private:
+    void DoConnect();
     void HandleConnect(const boost::system::error_code& error,
         boost::asio::ip::tcp::resolver::iterator endpoint_iterator);
 
@@ -74,14 +75,15 @@ class TCPClient {
     void HandleWrite(const boost::system::error_code& error);
     void DoClose();
 
+    boost::asio::io_service& io_service_;
+    boost::asio::ip::tcp::socket socket_;
     bool connected_;
     bool connecting_;
     bool write_in_progress_;
-    boost::asio::io_service& io_service_;
-    boost::asio::ip::tcp::socket socket_;
     std::deque< std::vector<char> > write_msgs_;
     boost::condition_variable& write_progress_cond_;
     boost::mutex& write_progress_mut_;
+    boost::asio::ip::tcp::resolver::iterator endpoint_iterator_;
   };
 
   /// Thread is lazily created when Send funciton is called.
