@@ -28,9 +28,9 @@ namespace asio = boost::asio;
 //-----------------------------------------------------------------------------
 UDPClient::AsyncUDPClient::AsyncUDPClient(asio::io_service& io_service,
     boost::condition_variable& cond, boost::mutex& mut)
-: io_service_(io_service)
+: write_in_progress_(false)
+, io_service_(io_service)
 , socket_(io_service_)
-, write_in_progress_(false)
 , write_progress_cond_(cond)
 , write_progress_mut_(mut)
 {
