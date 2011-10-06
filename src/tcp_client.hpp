@@ -28,6 +28,7 @@
 #include <boost/thread.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition_variable.hpp>
+#include <boost/date_time/posix_time/posix_time_types.hpp>
 
 #include "disallow_copy_and_assign.hpp"
 
@@ -48,6 +49,13 @@ class TCPClient {
   /// necessary because the client runs on a separate thread and quiting after
   /// a call to Send does not gaurantee delivery.
   void BlockUntilQueueIsEmpty();
+
+  enum {
+    /// Used to determine timeout period that determines to resend a message in
+    /// case the second message returns EPIPE so that the first message will be
+    /// delivered.
+    TIMEOUT_SECONDS = 10
+  };
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TCPClient);
@@ -80,6 +88,10 @@ class TCPClient {
     bool connected_;
     bool connecting_;
     bool write_in_progress_;
+    struct {
+      boost::posix_time::ptime time_;
+      std::vector<char> msg_;
+    } prev_;
     std::deque< std::vector<char> > write_msgs_;
     boost::condition_variable& write_progress_cond_;
     boost::mutex& write_progress_mut_;

@@ -45,6 +45,7 @@ TCPClient::AsyncTCPClient::AsyncTCPClient(asio::io_service& io_service,
 
 TCPClient::AsyncTCPClient::~AsyncTCPClient()
 {
+  socket_.shutdown(asio::ip::tcp::socket::shutdown_both);
   socket_.close();
 }
 
@@ -53,7 +54,6 @@ void TCPClient::AsyncTCPClient::Connect(
 {
   if (!connecting_) {
     socket_.close();
-    connecting_ = true;
     endpoint_iterator_ = endpoint_iterator;
     DoConnect();
   }
@@ -71,7 +71,7 @@ void TCPClient::AsyncTCPClient::Close()
 
 void TCPClient::AsyncTCPClient::DoConnect()
 {
-  std::cerr << __PRETTY_FUNCTION__ << "\n";
+  connecting_ = true;
   asio::ip::tcp::resolver::iterator endpoint_iterator = endpoint_iterator_;
   asio::ip::tcp::endpoint endpoint = *endpoint_iterator_;
   socket_.async_connect(endpoint,
@@ -83,9 +83,7 @@ void TCPClient::AsyncTCPClient::HandleConnect(
     const boost::system::error_code& error,
     asio::ip::tcp::resolver::iterator endpoint_iterator)
 {
-  std::cerr << __PRETTY_FUNCTION__ << "\n";
   if (error) {
-    std::cerr << __PRETTY_FUNCTION__ << ": error\n";
     socket_.close();
     if (endpoint_iterator != asio::ip::tcp::resolver::iterator()) {
       asio::ip::tcp::endpoint endpoint = *endpoint_iterator;
@@ -98,21 +96,29 @@ void TCPClient::AsyncTCPClient::HandleConnect(
         boost::lock_guard<boost::mutex> lock(write_progress_mut_);
         connecting_ = false;
       }
+      write_msgs_.clear();
       write_progress_cond_.notify_all();
     }
   } else if (connecting_) {
-    std::cerr << __PRETTY_FUNCTION__ << ": success\n";
     connected_ = true;
     connecting_ = false;
-    if (!write_in_progress_ && !write_msgs_.empty()) {
-      write_in_progress_ = true;
-      asio::async_write(socket_,
-          asio::buffer(write_msgs_.front()),
-          boost::bind(&AsyncTCPClient::HandleWrite, this,
-            asio::placeholders::error));
+    if (!write_in_progress_ && (!write_msgs_.empty() || !prev_.msg_.empty())) {
+      if (!prev_.msg_.empty()) {
+        using namespace boost::posix_time;
+        time_duration td = second_clock::local_time() -  prev_.time_;
+        if (td.seconds() < TIMEOUT_SECONDS) {
+          write_msgs_.push_front(prev_.msg_);
+        }
+      }
+
+      if (!write_msgs_.empty()) {
+        write_in_progress_ = true;
+        socket_.async_write_some(asio::buffer(write_msgs_.front()),
+            boost::bind(&AsyncTCPClient::HandleWrite, this,
+              asio::placeholders::error));
+      }
     }
   } else {
-    std::cerr << "TCPClient::AsyncTCPClient::HandleConnect(): error\n";
     {
       boost::lock_guard<boost::mutex> lock(write_progress_mut_);
       connecting_ = false;
@@ -123,9 +129,8 @@ void TCPClient::AsyncTCPClient::HandleConnect(
 
 void TCPClient::AsyncTCPClient::DoSend(const std::vector<char> msg)
 {
-  if (!connected_ || connecting_) {
-    if (!connecting_) DoConnect();
-    return;
+  if (!connected_ && !connecting_) {
+    DoConnect();
   }
 
   // construct a message with prefixed length
@@ -137,8 +142,7 @@ void TCPClient::AsyncTCPClient::DoSend(const std::vector<char> msg)
   write_msgs_.push_back(prefixed_msg);
   if (!write_in_progress_ && !connecting_) {
     write_in_progress_ = true;
-    asio::async_write(socket_,
-        asio::buffer(write_msgs_.front()),
+    socket_.async_write_some(asio::buffer(write_msgs_.front()),
         boost::bind(&AsyncTCPClient::HandleWrite, this,
           asio::placeholders::error));
   }
@@ -147,13 +151,12 @@ void TCPClient::AsyncTCPClient::DoSend(const std::vector<char> msg)
 void TCPClient::AsyncTCPClient::HandleWrite(
     const boost::system::error_code& error)
 {
-  std::cerr << __PRETTY_FUNCTION__ << "\n";
   if (!error) {
-    std::cerr << __PRETTY_FUNCTION__ << ": success\n";
+    prev_.time_ = boost::posix_time::second_clock::local_time();
+    prev_.msg_ = write_msgs_.front();
     write_msgs_.pop_front();
     if (!write_msgs_.empty()) {
-      asio::async_write(socket_,
-          asio::buffer(write_msgs_.front()),
+      socket_.async_write_some(asio::buffer(write_msgs_.front()),
           boost::bind(&AsyncTCPClient::HandleWrite, this,
             asio::placeholders::error));
     } else {
@@ -164,13 +167,23 @@ void TCPClient::AsyncTCPClient::HandleWrite(
       write_progress_cond_.notify_all();
     }
   } else {
-    std::cerr << __PRETTY_FUNCTION__ << ": error\n";
-    {
-      boost::lock_guard<boost::mutex> lock(write_progress_mut_);
+    // when the error is EPIPE, there is a chance that the server was
+    // temporarily dropped but is still online. Close the socket and try
+    // reconnecting to the server.
+    if (error == boost::system::errc::broken_pipe) {
+      connected_ = false;
+      connecting_ = false;
       write_in_progress_ = false;
+      socket_.close();
+      DoConnect();
+    } else {
+      {
+        boost::lock_guard<boost::mutex> lock(write_progress_mut_);
+        write_in_progress_ = false;
+      }
+      write_progress_cond_.notify_all();
+      DoClose();
     }
-    write_progress_cond_.notify_all();
-    DoClose();
   }
 }
 
@@ -180,6 +193,7 @@ void TCPClient::AsyncTCPClient::DoClose()
   connecting_ = false;
   write_in_progress_ = false;
   socket_.close();
+  prev_.msg_.clear();
   write_msgs_.clear();
 }
 
@@ -240,7 +254,6 @@ bool TCPClient::RunThread()
 
 void TCPClient::Run()
 {
-  std::cerr << __PRETTY_FUNCTION__ << ": entering\n";
   std::stringstream port_string;
   port_string << port_;
 
@@ -259,6 +272,5 @@ void TCPClient::Run()
   io_service_.reset();
   service_is_ready_ = false;
   thread_is_running_ = false;
-  std::cerr << __PRETTY_FUNCTION__ << ": exiting\n";
 }
 
