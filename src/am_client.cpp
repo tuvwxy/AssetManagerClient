@@ -32,7 +32,6 @@
 std::string g_base_address = "";
 bool g_use_udp = false;
 std::string g_host_address = "127.0.0.1";
-bool g_continue = true;
 
 void ProcessArguments(int argc, const char* argv[]);
 void ProcessInput(am::AssetManagerClient& am, const std::string& input);
@@ -67,7 +66,7 @@ int main(int argc, const char* argv[])
   signal(SIGQUIT, Signal);
 #endif
 
-  while (g_continue) {
+  while (true) {
     std::cout << "-> ";
     std::string input;
     std::getline(std::cin, input);
@@ -75,7 +74,6 @@ int main(int argc, const char* argv[])
     ProcessInput(am, input);
   }
 
-  fclose(stdin);
   return 0;
 }
 
@@ -203,6 +201,6 @@ missing_argument:
 
 void Signal(int what)
 {
-  g_continue = false;
+  fclose(stdin);
 }
 
