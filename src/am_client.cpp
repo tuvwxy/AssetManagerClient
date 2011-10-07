@@ -98,7 +98,7 @@ void ProcessArguments(int argc, const char* argv[])
         printf("Not enough argument.\n");
         goto print_usage;
       }
-    } else if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--host")) {
+    } else if (!strcmp(argv[i], "-i") || !strcmp(argv[i], "--ip")) {
       if (i++ < argc) {
         g_host_address = argv[i];
       } else {
@@ -118,14 +118,15 @@ void ProcessArguments(int argc, const char* argv[])
   return;
 
 print_usage:
-  printf("Usage: am_client [options] base_address", argv[0]);
+  printf("Usage: am_client [ -i ip ] [ -p port ] base_address", argv[0]);
   printf("\nOptions:");
   printf("\n  -h,--help                "
       "Display this information.");
   printf("\n  -p,--protocol <tcp|udp>  "
       "Use TCP or UDP protocol. Default = tcp.");
-  printf("\n  -h,--host <arg>          "
+  printf("\n  -i,--ip <ip>             "
       "Set Asset Manager's host address. Default = 127.0.0.1");
+  printf("\n");
   exit(0);
 }
 
