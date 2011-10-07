@@ -45,7 +45,7 @@ int main(int argc, const char* argv[])
   // Send a custom message over TCP
   am.SendCustomTCP("/object/cue", "i", 1);
 
-  // Sleep a little so TCP message gets sent first
+  // Sleep a little so the TCP message gets sent before the UDP messages.
   usleep(1000);
 
   // Start a new bundle so UDP packets are bundled as many as possible.
@@ -60,6 +60,9 @@ int main(int argc, const char* argv[])
 
   // Send the bundle over the network.
   am.EndBundle();
+
+  // Sleep a little so the UDP messages gets sent before unload.
+  usleep(1000);
 
   // Unload project to release resources on Asset Manager
   am.Unload();

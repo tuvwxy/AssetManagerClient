@@ -38,6 +38,7 @@ TCPClient::AsyncTCPClient::AsyncTCPClient(asio::io_service& io_service,
 , connected_(false)
 , connecting_(false)
 , write_in_progress_(false)
+, msg_to_send_(false)
 , write_progress_cond_(cond)
 , write_progress_mut_(mut)
 {
@@ -61,6 +62,7 @@ void TCPClient::AsyncTCPClient::Connect(
 
 void TCPClient::AsyncTCPClient::Send(const std::vector<char>& msg)
 {
+  msg_to_send_ = true;
   io_service_.post(boost::bind(&AsyncTCPClient::DoSend, this, msg));
 }
 
@@ -146,6 +148,7 @@ void TCPClient::AsyncTCPClient::DoSend(const std::vector<char> msg)
         boost::bind(&AsyncTCPClient::HandleWrite, this,
           asio::placeholders::error));
   }
+  msg_to_send_ = false;
 }
 
 void TCPClient::AsyncTCPClient::HandleWrite(
@@ -232,7 +235,9 @@ void TCPClient::BlockUntilQueueIsEmpty()
   while (thread_is_running_ && !service_is_ready_);
 
   boost::unique_lock<boost::mutex> lock(write_progress_mut_);
-  while (client_.WriteInProgress() || client_.Connecting()) {
+  while (client_.WriteInProgress() || 
+      client_.HaveMsgToSend() || 
+      client_.Connecting()) {
     write_progress_cond_.wait(lock);
   }
 }

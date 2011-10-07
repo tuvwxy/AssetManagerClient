@@ -62,6 +62,7 @@ class UDPClient {
     void SetEndpoint(boost::asio::ip::udp::endpoint& endpoint);
     void Send(const std::vector<char>& msg);
     bool WriteInProgress() const { return write_in_progress_; }
+    bool HaveMsgToSend() const { return msg_to_send_; }
 
    private:
     void DoSend(const std::vector<char> msg);
@@ -69,6 +70,7 @@ class UDPClient {
          std::size_t bytes_transferred);
 
     bool write_in_progress_;
+    bool msg_to_send_;
     boost::asio::io_service& io_service_;
     boost::asio::ip::udp::socket socket_;
     boost::asio::ip::udp::endpoint endpoint_;

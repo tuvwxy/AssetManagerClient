@@ -72,6 +72,7 @@ class TCPClient {
     void Send(const std::vector<char>& msg);
     void Close();
     bool WriteInProgress() const { return write_in_progress_; }
+    bool HaveMsgToSend() const { return msg_to_send_; }
     bool Connecting() const { return connecting_; }
 
    private:
@@ -88,6 +89,7 @@ class TCPClient {
     bool connected_;
     bool connecting_;
     bool write_in_progress_;
+    bool msg_to_send_;
     struct {
       boost::posix_time::ptime time_;
       std::vector<char> msg_;

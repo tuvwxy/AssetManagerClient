@@ -29,6 +29,7 @@ namespace asio = boost::asio;
 UDPClient::AsyncUDPClient::AsyncUDPClient(asio::io_service& io_service,
     boost::condition_variable& cond, boost::mutex& mut)
 : write_in_progress_(false)
+, msg_to_send_(false)
 , io_service_(io_service)
 , socket_(io_service_)
 , write_progress_cond_(cond)
@@ -49,6 +50,7 @@ void UDPClient::AsyncUDPClient::SetEndpoint(asio::ip::udp::endpoint& endpoint)
 
 void UDPClient::AsyncUDPClient::Send(const std::vector<char>& msg)
 {
+  msg_to_send_ = true;
   io_service_.post(boost::bind(&AsyncUDPClient::DoSend, this, msg));
 }
 
@@ -62,6 +64,7 @@ void UDPClient::AsyncUDPClient::DoSend(const std::vector<char> msg)
           asio::placeholders::error,
           asio::placeholders::bytes_transferred));
   }
+  msg_to_send_ = false;
 }
 
 void UDPClient::AsyncUDPClient::HandlerWrite(
@@ -126,7 +129,7 @@ void UDPClient::BlockUntilQueueIsEmpty()
   while (thread_is_running_ && !service_is_ready_);
 
   boost::unique_lock<boost::mutex> lock(write_progress_mut_);
-  while (client_.WriteInProgress()) {
+  while (client_.WriteInProgress() || client_.HaveMsgToSend()) {
     write_progress_cond_.wait(lock);
   }
 }
