@@ -73,6 +73,7 @@ int main(int argc, const char* argv[])
     ProcessInput(am, input);
   }
 
+  std::cout << std::endl;
   return 0;
 }
 
