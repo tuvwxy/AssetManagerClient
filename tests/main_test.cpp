@@ -33,19 +33,7 @@ int main(int argc, const char* argv[])
   // default TCP. This should only be set if there's a problem with TCP.
   //am.SetOption(am::AssetManagerClient::CORE_USE_UDP);
 
-  // Setting SEND_UNLOAD_IN_DESTRUCTOR makes AssetManagerClient to
-  // automatically call am.Unload() upon getting deallocated. 
-  am.SetOption(am::AssetManagerClient::SEND_UNLOAD_IN_DESTRUCTOR);
-
-  // Set DONOT_CLEAR_QUEUE_IN_DESTRUCTOR if any remaining messages do not need
-  // to be sent before exiting the program. In other words, setting this option
-  // will guarantee that the destructor does not block. Note that setting
-  // SEND_UNLOAD_IN_DESTRUCTOR may not work if DONOT_CLEAR_QUEUE_IN_DESTRUCTOR
-  // is set because the networking threads may exit before having a chance to
-  // send the Unload message.
-  //am.SetOption(am::AssetManagerClient::DONOT_CLEAR_QUEUE_IN_DESTRUCTOR);
-
-  // Unmute AssetManager and set volume to nominal
+  // Unmute Asset Manager and set volume to nominal
   am.SetSystemMute(false);
   am.SetSystemVolume(1.0f);
 
@@ -58,7 +46,6 @@ int main(int argc, const char* argv[])
   am.SendCustomTCP("/object/cue", "i", 1);
 
   // Sleep a little so TCP message gets sent first
-  std::cout << "Sleeping for 1 millisecond...\n";
   usleep(1000);
 
   // Start a new bundle so UDP packets are bundled as many as possible.
@@ -70,9 +57,17 @@ int main(int argc, const char* argv[])
   for (int i = 0; i < 10; i++) {
     am.SendCustomUDP("/object/pos", "fff", (float)i, i * 1.23f, i * 3.0f);
   }
-  
+
   // Send the bundle over the network.
   am.EndBundle();
 
+  // Unload project to release resources on Asset Manager
+  am.Unload();
+
+  // Block until all messages are processed to make sure that they are sent
+  // before exiting the program.
+  am.BlockUntilQueuesAreEmpty();
+
   return 0;
 }
+

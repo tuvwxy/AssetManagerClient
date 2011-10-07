@@ -52,13 +52,6 @@ AssetManagerClient::AssetManagerClient(const std::string& base_address,
 
 AssetManagerClient::~AssetManagerClient()
 {
-  if (options_ & SEND_UNLOAD_IN_DESTRUCTOR) {
-    Unload();
-  }
-  if (!(options_ & DONOT_CLEAR_QUEUE_IN_DESTRUCTOR)) {
-    tcp_client_->BlockUntilQueueIsEmpty();
-    udp_client_->BlockUntilQueueIsEmpty();
-  }
   delete tcp_client_;
   delete udp_client_;
 }
@@ -200,5 +193,11 @@ void AssetManagerClient::AppendBundle(std::vector<char>& bundle,
     bundle.insert(bundle.end(), (char*)&a, (char*)&a+4);
     bundle.insert(bundle.end(), message.begin(), message.end());
   }
+}
+
+void AssetManagerClient::BlockUntilQueuesAreEmpty()
+{
+  tcp_client_->BlockUntilQueueIsEmpty();
+  udp_client_->BlockUntilQueueIsEmpty();
 }
 

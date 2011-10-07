@@ -53,10 +53,6 @@ class AssetManagerClient {
   enum Option {
     /// Use UDP instead of TCP (default) for sending core messages.
     CORE_USE_UDP                        = 1 << 0,
-    /// Send a @a Unload message in destructor.
-    SEND_UNLOAD_IN_DESTRUCTOR           = 1 << 1,
-    /// Do not clear message queues in destructor, avoiding blocking.
-    DONOT_CLEAR_QUEUE_IN_DESTRUCTOR     = 1 << 2
   };
 
   /// @brief Constructor of @a AssetManagerClient.
@@ -251,6 +247,13 @@ class AssetManagerClient {
   ///
   /// @see @a StartBundle
   void EndBundle();
+
+  /// @brief Block and process all messages in the TCP and UDP queues
+  ///
+  /// The function blocks and process all the messages that are in the TCP and
+  /// UDP queues. This may be used to ensure that messages are sent before
+  /// exiting the program.
+  void BlockUntilQueuesAreEmpty();
 
  private:
   DISALLOW_COPY_AND_ASSIGN(AssetManagerClient);

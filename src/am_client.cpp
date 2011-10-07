@@ -59,7 +59,6 @@ int main(int argc, const char* argv[])
 
   am::AssetManagerClient am(g_base_address, g_host_address);
   if (g_use_udp) am.SetOption(am::AssetManagerClient::CORE_USE_UDP);
-  am.SetOption(am::AssetManagerClient::SEND_UNLOAD_IN_DESTRUCTOR);
 
   signal(SIGINT, Signal);
 #if !defined(_WIN32)
