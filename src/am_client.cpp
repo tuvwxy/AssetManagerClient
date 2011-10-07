@@ -75,6 +75,7 @@ int main(int argc, const char* argv[])
     ProcessInput(am, input);
   }
 
+  fclose(stdin);
   return 0;
 }
 
@@ -203,6 +204,5 @@ missing_argument:
 void Signal(int what)
 {
   g_continue = false;
-  fclose(stdin);
 }
 
