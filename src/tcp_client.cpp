@@ -46,8 +46,9 @@ TCPClient::AsyncTCPClient::AsyncTCPClient(asio::io_service& io_service,
 
 TCPClient::AsyncTCPClient::~AsyncTCPClient()
 {
-  socket_.shutdown(asio::ip::tcp::socket::shutdown_both);
-  socket_.close();
+  boost::system::error_code ec;
+  socket_.shutdown(asio::ip::tcp::socket::shutdown_both, ec);
+  socket_.close(ec);
 }
 
 void TCPClient::AsyncTCPClient::Connect(
