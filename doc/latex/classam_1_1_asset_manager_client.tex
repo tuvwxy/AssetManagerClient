@@ -14,9 +14,7 @@ Simple interface for interacting with Asset Manager server.
 \subsection*{Public Types}
 \begin{DoxyCompactItemize}
 \item 
-enum \hyperlink{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204}{Option} \{ \hyperlink{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204afbddc98293c73fb9327140202446bcd3}{CORE\_\-USE\_\-UDP} =  1 $<$$<$ 0, 
-\hyperlink{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204a12d66e04635284dd63ade2bac119a6df}{SEND\_\-UNLOAD\_\-IN\_\-DESTRUCTOR} =  1 $<$$<$ 1, 
-\hyperlink{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204a8572f40c3d36da034eb81a13e04eab23}{DONOT\_\-CLEAR\_\-QUEUE\_\-IN\_\-DESTRUCTOR} =  1 $<$$<$ 2
+enum \hyperlink{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204}{Option} \{ \hyperlink{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204afbddc98293c73fb9327140202446bcd3}{CORE\_\-USE\_\-UDP} =  1 $<$$<$ 0
  \}
 \begin{DoxyCompactList}\small\item\em Options to change internal behavior of the class. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
@@ -24,7 +22,10 @@ enum \hyperlink{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad82
 \item 
 \hyperlink{classam_1_1_asset_manager_client_aef19f13fdc5939ddb53ec80f79f7dc1f}{AssetManagerClient} (const std::string \&base\_\-address, const std::string \&host, long tcp\_\-port=TCP\_\-PORT, long udp\_\-port=UDP\_\-PORT)
 \begin{DoxyCompactList}\small\item\em Constructor of {\itshape \hyperlink{classam_1_1_asset_manager_client}{AssetManagerClient}\/}. \end{DoxyCompactList}\item 
-\hyperlink{classam_1_1_asset_manager_client_af815a4a3a82b47ba39fa688819d5cb3d}{$\sim$AssetManagerClient} ()
+\hypertarget{classam_1_1_asset_manager_client_af815a4a3a82b47ba39fa688819d5cb3d}{
+\hyperlink{classam_1_1_asset_manager_client_af815a4a3a82b47ba39fa688819d5cb3d}{$\sim$AssetManagerClient} ()}
+\label{classam_1_1_asset_manager_client_af815a4a3a82b47ba39fa688819d5cb3d}
+
 \begin{DoxyCompactList}\small\item\em Destructor of {\itshape \hyperlink{classam_1_1_asset_manager_client}{AssetManagerClient}\/}. \end{DoxyCompactList}\item 
 void \hyperlink{classam_1_1_asset_manager_client_a9b305a3d9362bdacbf0b676df39474c5}{SetOption} (\hyperlink{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204}{Option} option)
 \begin{DoxyCompactList}\small\item\em Set option to change internal behavior. \end{DoxyCompactList}\item 
@@ -47,7 +48,9 @@ void \hyperlink{classam_1_1_asset_manager_client_a547f6a9f9acdf7318c47640099cff0
 void \hyperlink{classam_1_1_asset_manager_client_aa3915a3098877eb926859b978309f872}{StartBundle} ()
 \begin{DoxyCompactList}\small\item\em Mark the start of a new bundle. \end{DoxyCompactList}\item 
 void \hyperlink{classam_1_1_asset_manager_client_a53e3932c674527bb7568c2de594db296}{EndBundle} ()
-\begin{DoxyCompactList}\small\item\em Mark the end of the bundle and send it over the network. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Mark the end of the bundle and send it over the network. \end{DoxyCompactList}\item 
+void \hyperlink{classam_1_1_asset_manager_client_a9620f60faa62e47edd4c37699a424a39}{BlockUntilQueuesAreEmpty} ()
+\begin{DoxyCompactList}\small\item\em Block and process all messages in the TCP and UDP queues. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -72,15 +75,7 @@ Options to change internal behavior of the class.
 \hypertarget{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204afbddc98293c73fb9327140202446bcd3}{
 CORE\_\-USE\_\-UDP}
 \label{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204afbddc98293c73fb9327140202446bcd3}
-}]Use UDP instead of TCP (default) for sending core messages. \index{SEND\_\-UNLOAD\_\-IN\_\-DESTRUCTOR@{SEND\_\-UNLOAD\_\-IN\_\-DESTRUCTOR}!am::AssetManagerClient@{am::AssetManagerClient}}\index{am::AssetManagerClient@{am::AssetManagerClient}!SEND\_\-UNLOAD\_\-IN\_\-DESTRUCTOR@{SEND\_\-UNLOAD\_\-IN\_\-DESTRUCTOR}}\item[{\em 
-\hypertarget{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204a12d66e04635284dd63ade2bac119a6df}{
-SEND\_\-UNLOAD\_\-IN\_\-DESTRUCTOR}
-\label{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204a12d66e04635284dd63ade2bac119a6df}
-}]Send a {\itshape Unload\/} message in destructor. \index{DONOT\_\-CLEAR\_\-QUEUE\_\-IN\_\-DESTRUCTOR@{DONOT\_\-CLEAR\_\-QUEUE\_\-IN\_\-DESTRUCTOR}!am::AssetManagerClient@{am::AssetManagerClient}}\index{am::AssetManagerClient@{am::AssetManagerClient}!DONOT\_\-CLEAR\_\-QUEUE\_\-IN\_\-DESTRUCTOR@{DONOT\_\-CLEAR\_\-QUEUE\_\-IN\_\-DESTRUCTOR}}\item[{\em 
-\hypertarget{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204a8572f40c3d36da034eb81a13e04eab23}{
-DONOT\_\-CLEAR\_\-QUEUE\_\-IN\_\-DESTRUCTOR}
-\label{classam_1_1_asset_manager_client_a46c830784e6b2983faa4764d1cad8204a8572f40c3d36da034eb81a13e04eab23}
-}]Do not clear message queues in destructor, avoiding blocking. \end{description}
+}]Use UDP instead of TCP (default) for sending core messages. \end{description}
 \end{Desc}
 
 
@@ -115,23 +110,23 @@ Create an \hyperlink{classam_1_1_asset_manager_client}{AssetManagerClient} with 
 \mbox{\tt in}  & {\em udp\_\-port} & (Optional) Destination UDP port. \\
 \hline
 \end{DoxyParams}
-\hypertarget{classam_1_1_asset_manager_client_af815a4a3a82b47ba39fa688819d5cb3d}{
-\index{am::AssetManagerClient@{am::AssetManagerClient}!$\sim$AssetManagerClient@{$\sim$AssetManagerClient}}
-\index{$\sim$AssetManagerClient@{$\sim$AssetManagerClient}!am::AssetManagerClient@{am::AssetManagerClient}}
-\subsubsection[{$\sim$AssetManagerClient}]{\setlength{\rightskip}{0pt plus 5cm}am::AssetManagerClient::$\sim$AssetManagerClient (
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classam_1_1_asset_manager_client_a9620f60faa62e47edd4c37699a424a39}{
+\index{am::AssetManagerClient@{am::AssetManagerClient}!BlockUntilQueuesAreEmpty@{BlockUntilQueuesAreEmpty}}
+\index{BlockUntilQueuesAreEmpty@{BlockUntilQueuesAreEmpty}!am::AssetManagerClient@{am::AssetManagerClient}}
+\subsubsection[{BlockUntilQueuesAreEmpty}]{\setlength{\rightskip}{0pt plus 5cm}void am::AssetManagerClient::BlockUntilQueuesAreEmpty (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )}}
-\label{classam_1_1_asset_manager_client_af815a4a3a82b47ba39fa688819d5cb3d}
+\label{classam_1_1_asset_manager_client_a9620f60faa62e47edd4c37699a424a39}
 
 
-Destructor of {\itshape \hyperlink{classam_1_1_asset_manager_client}{AssetManagerClient}\/}. 
+Block and process all messages in the TCP and UDP queues. 
 
-If option {\itshape SEND\_\-UNLOAD\_\-IN\_\-DESTRUCTOR\/} is set, {\itshape Unload\/} is called. By default, the function blocks until all TCP and UDP message queue are cleared. The function will return immediately if option {\itshape DONOT\_\-CLEAR\_\-QUEUE\_\-IN\_\-DESTRUCTOR\/} is set. Note that if both {\itshape SEND\_\-UNLOAD\_\-IN\_\-DESTRUCTOR\/} and {\itshape DONOT\_\-CLEAR\_\-QUEUE\_\-IN\_\-DESTRUCTOR\/} are set, {\itshape Unload\/} message may most likely not be delivered successfully. 
-
-\subsection{Member Function Documentation}
-\hypertarget{classam_1_1_asset_manager_client_a53e3932c674527bb7568c2de594db296}{
+The function blocks and process all the messages that are in the TCP and UDP queues. This may be used to ensure that messages are sent before exiting the program. \hypertarget{classam_1_1_asset_manager_client_a53e3932c674527bb7568c2de594db296}{
 \index{am::AssetManagerClient@{am::AssetManagerClient}!EndBundle@{EndBundle}}
 \index{EndBundle@{EndBundle}!am::AssetManagerClient@{am::AssetManagerClient}}
 \subsubsection[{EndBundle}]{\setlength{\rightskip}{0pt plus 5cm}void am::AssetManagerClient::EndBundle (

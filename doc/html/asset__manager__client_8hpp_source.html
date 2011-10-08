@@ -122,70 +122,70 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00051"></a>00051 
 <a name="l00053"></a><a class="code" href="classam_1_1_asset_manager_client.html#a46c830784e6b2983faa4764d1cad8204">00053</a>   <span class="keyword">enum</span> <a class="code" href="classam_1_1_asset_manager_client.html#a46c830784e6b2983faa4764d1cad8204" title="Options to change internal behavior of the class.">Option</a> {
 <a name="l00055"></a><a class="code" href="classam_1_1_asset_manager_client.html#a46c830784e6b2983faa4764d1cad8204afbddc98293c73fb9327140202446bcd3">00055</a>     <a class="code" href="classam_1_1_asset_manager_client.html#a46c830784e6b2983faa4764d1cad8204afbddc98293c73fb9327140202446bcd3" title="Use UDP instead of TCP (default) for sending core messages.">CORE_USE_UDP</a>                        = 1 &lt;&lt; 0,
-<a name="l00057"></a><a class="code" href="classam_1_1_asset_manager_client.html#a46c830784e6b2983faa4764d1cad8204a12d66e04635284dd63ade2bac119a6df">00057</a>     <a class="code" href="classam_1_1_asset_manager_client.html#a46c830784e6b2983faa4764d1cad8204a12d66e04635284dd63ade2bac119a6df" title="Send a Unload message in destructor.">SEND_UNLOAD_IN_DESTRUCTOR</a>           = 1 &lt;&lt; 1,
-<a name="l00059"></a><a class="code" href="classam_1_1_asset_manager_client.html#a46c830784e6b2983faa4764d1cad8204a8572f40c3d36da034eb81a13e04eab23">00059</a>     <a class="code" href="classam_1_1_asset_manager_client.html#a46c830784e6b2983faa4764d1cad8204a8572f40c3d36da034eb81a13e04eab23" title="Do not clear message queues in destructor, avoiding blocking.">DONOT_CLEAR_QUEUE_IN_DESTRUCTOR</a>     = 1 &lt;&lt; 2
-<a name="l00060"></a>00060   };
-<a name="l00061"></a>00061 
-<a name="l00078"></a>00078   <a class="code" href="classam_1_1_asset_manager_client.html#aef19f13fdc5939ddb53ec80f79f7dc1f" title="Constructor of AssetManagerClient.">AssetManagerClient</a>(<span class="keyword">const</span> std::string&amp; base_address,
-<a name="l00079"></a>00079       <span class="keyword">const</span> std::string&amp; host,
-<a name="l00080"></a>00080       <span class="keywordtype">long</span> tcp_port=TCP_PORT,
-<a name="l00081"></a>00081       <span class="keywordtype">long</span> udp_port=UDP_PORT);
-<a name="l00082"></a>00082 
-<a name="l00091"></a>00091   <a class="code" href="classam_1_1_asset_manager_client.html#af815a4a3a82b47ba39fa688819d5cb3d" title="Destructor of AssetManagerClient.">~AssetManagerClient</a>();
-<a name="l00092"></a>00092 
-<a name="l00099"></a>00099   <span class="keywordtype">void</span> <a class="code" href="classam_1_1_asset_manager_client.html#a9b305a3d9362bdacbf0b676df39474c5" title="Set option to change internal behavior.">SetOption</a>(<a class="code" href="classam_1_1_asset_manager_client.html#a46c830784e6b2983faa4764d1cad8204" title="Options to change internal behavior of the class.">Option</a> option);
-<a name="l00100"></a>00100 
-<a name="l00108"></a>00108   <span class="keywordtype">void</span> <a class="code" href="classam_1_1_asset_manager_client.html#a42894c6bff07e22fb9598e1c089779a6" title="Mute or unmute Asset Manager.">SetSystemMute</a>(<span class="keywordtype">bool</span> mute);
-<a name="l00109"></a>00109 
-<a name="l00120"></a>00120   <span class="keywordtype">void</span> <a class="code" href="classam_1_1_asset_manager_client.html#a22b644bd78df97d01a08ef4d36bd60bc" title="Set overall volume of Asset Manager.">SetSystemVolume</a>(<span class="keywordtype">float</span> volume);
-<a name="l00121"></a>00121 
-<a name="l00132"></a>00132   <span class="keywordtype">void</span> <a class="code" href="classam_1_1_asset_manager_client.html#a185b1f7d9a2953b05699dcc9cdfc8a6c" title="Load project in Asset Manager.">Load</a>();
-<a name="l00133"></a>00133 
-<a name="l00142"></a>00142   <span class="keywordtype">void</span> <a class="code" href="classam_1_1_asset_manager_client.html#ac738859d526f37cc1a708d5d4f8f2de3" title="Unload project in Asset Manager.">Unload</a>();
-<a name="l00143"></a>00143 
-<a name="l00156"></a>00156   <span class="keywordtype">void</span> <a class="code" href="classam_1_1_asset_manager_client.html#aaf7ae48f7234fcc98f9c5e15dad4c46c" title="Mute or unmute project.">SetMute</a>(<span class="keywordtype">bool</span> mute);
-<a name="l00157"></a>00157 
-<a name="l00166"></a>00166   <span class="keywordtype">void</span> <a class="code" href="classam_1_1_asset_manager_client.html#a0aacdcf0ab177994980ea5a28d368292" title="Set project volume.">SetVolume</a>(<span class="keywordtype">float</span> volume);
-<a name="l00167"></a>00167 
-<a name="l00216"></a>00216   <span class="keywordtype">void</span> <a class="code" href="classam_1_1_asset_manager_client.html#ae926351a13831b539c185e2ec4f7a9d9" title="Send custom TCP message to the project.">SendCustomTCP</a>(<span class="keyword">const</span> std::string&amp; url, <span class="keyword">const</span> <span class="keywordtype">char</span>* format, ...);
-<a name="l00217"></a>00217 
-<a name="l00228"></a>00228   <span class="keywordtype">void</span> <a class="code" href="classam_1_1_asset_manager_client.html#a547f6a9f9acdf7318c47640099cff091" title="Send custom UDP message to the project.">SendCustomUDP</a>(<span class="keyword">const</span> std::string&amp; url, <span class="keyword">const</span> <span class="keywordtype">char</span>* format, ...);
-<a name="l00229"></a>00229 
-<a name="l00245"></a>00245   <span class="keywordtype">void</span> <a class="code" href="classam_1_1_asset_manager_client.html#aa3915a3098877eb926859b978309f872" title="Mark the start of a new bundle.">StartBundle</a>();
-<a name="l00246"></a>00246 
-<a name="l00253"></a>00253   <span class="keywordtype">void</span> <a class="code" href="classam_1_1_asset_manager_client.html#a53e3932c674527bb7568c2de594db296" title="Mark the end of the bundle and send it over the network.">EndBundle</a>();
-<a name="l00254"></a>00254 
-<a name="l00255"></a>00255  <span class="keyword">private</span>:
-<a name="l00256"></a>00256   DISALLOW_COPY_AND_ASSIGN(<a class="code" href="classam_1_1_asset_manager_client.html" title="Simple interface for interacting with Asset Manager server.">AssetManagerClient</a>);
-<a name="l00257"></a>00257 
-<a name="l00258"></a>00258   <span class="keyword">enum</span> {
-<a name="l00259"></a>00259     TCP_PORT = 15002,
-<a name="l00260"></a>00260     UDP_PORT = 15003,
-<a name="l00261"></a>00261     MAX_MESSAGE_SIZE = 1500
-<a name="l00262"></a>00262   };
+<a name="l00056"></a>00056   };
+<a name="l00057"></a>00057 
+<a name="l00074"></a>00074   <a class="code" href="classam_1_1_asset_manager_client.html#aef19f13fdc5939ddb53ec80f79f7dc1f" title="Constructor of AssetManagerClient.">AssetManagerClient</a>(<span class="keyword">const</span> std::string&amp; base_address,
+<a name="l00075"></a>00075       <span class="keyword">const</span> std::string&amp; host,
+<a name="l00076"></a>00076       <span class="keywordtype">long</span> tcp_port=TCP_PORT,
+<a name="l00077"></a>00077       <span class="keywordtype">long</span> udp_port=UDP_PORT);
+<a name="l00078"></a>00078 
+<a name="l00080"></a>00080   <a class="code" href="classam_1_1_asset_manager_client.html#af815a4a3a82b47ba39fa688819d5cb3d" title="Destructor of AssetManagerClient.">~AssetManagerClient</a>();
+<a name="l00081"></a>00081 
+<a name="l00088"></a>00088   <span class="keywordtype">void</span> <a class="code" href="classam_1_1_asset_manager_client.html#a9b305a3d9362bdacbf0b676df39474c5" title="Set option to change internal behavior.">SetOption</a>(<a class="code" href="classam_1_1_asset_manager_client.html#a46c830784e6b2983faa4764d1cad8204" title="Options to change internal behavior of the class.">Option</a> option);
+<a name="l00089"></a>00089 
+<a name="l00097"></a>00097   <span class="keywordtype">void</span> <a class="code" href="classam_1_1_asset_manager_client.html#a42894c6bff07e22fb9598e1c089779a6" title="Mute or unmute Asset Manager.">SetSystemMute</a>(<span class="keywordtype">bool</span> mute);
+<a name="l00098"></a>00098 
+<a name="l00109"></a>00109   <span class="keywordtype">void</span> <a class="code" href="classam_1_1_asset_manager_client.html#a22b644bd78df97d01a08ef4d36bd60bc" title="Set overall volume of Asset Manager.">SetSystemVolume</a>(<span class="keywordtype">float</span> volume);
+<a name="l00110"></a>00110 
+<a name="l00121"></a>00121   <span class="keywordtype">void</span> <a class="code" href="classam_1_1_asset_manager_client.html#a185b1f7d9a2953b05699dcc9cdfc8a6c" title="Load project in Asset Manager.">Load</a>();
+<a name="l00122"></a>00122 
+<a name="l00131"></a>00131   <span class="keywordtype">void</span> <a class="code" href="classam_1_1_asset_manager_client.html#ac738859d526f37cc1a708d5d4f8f2de3" title="Unload project in Asset Manager.">Unload</a>();
+<a name="l00132"></a>00132 
+<a name="l00145"></a>00145   <span class="keywordtype">void</span> <a class="code" href="classam_1_1_asset_manager_client.html#aaf7ae48f7234fcc98f9c5e15dad4c46c" title="Mute or unmute project.">SetMute</a>(<span class="keywordtype">bool</span> mute);
+<a name="l00146"></a>00146 
+<a name="l00155"></a>00155   <span class="keywordtype">void</span> <a class="code" href="classam_1_1_asset_manager_client.html#a0aacdcf0ab177994980ea5a28d368292" title="Set project volume.">SetVolume</a>(<span class="keywordtype">float</span> volume);
+<a name="l00156"></a>00156 
+<a name="l00205"></a>00205   <span class="keywordtype">void</span> <a class="code" href="classam_1_1_asset_manager_client.html#ae926351a13831b539c185e2ec4f7a9d9" title="Send custom TCP message to the project.">SendCustomTCP</a>(<span class="keyword">const</span> std::string&amp; url, <span class="keyword">const</span> <span class="keywordtype">char</span>* format, ...);
+<a name="l00206"></a>00206 
+<a name="l00217"></a>00217   <span class="keywordtype">void</span> <a class="code" href="classam_1_1_asset_manager_client.html#a547f6a9f9acdf7318c47640099cff091" title="Send custom UDP message to the project.">SendCustomUDP</a>(<span class="keyword">const</span> std::string&amp; url, <span class="keyword">const</span> <span class="keywordtype">char</span>* format, ...);
+<a name="l00218"></a>00218 
+<a name="l00234"></a>00234   <span class="keywordtype">void</span> <a class="code" href="classam_1_1_asset_manager_client.html#aa3915a3098877eb926859b978309f872" title="Mark the start of a new bundle.">StartBundle</a>();
+<a name="l00235"></a>00235 
+<a name="l00242"></a>00242   <span class="keywordtype">void</span> <a class="code" href="classam_1_1_asset_manager_client.html#a53e3932c674527bb7568c2de594db296" title="Mark the end of the bundle and send it over the network.">EndBundle</a>();
+<a name="l00243"></a>00243 
+<a name="l00249"></a>00249   <span class="keywordtype">void</span> <a class="code" href="classam_1_1_asset_manager_client.html#a9620f60faa62e47edd4c37699a424a39" title="Block and process all messages in the TCP and UDP queues.">BlockUntilQueuesAreEmpty</a>();
+<a name="l00250"></a>00250 
+<a name="l00251"></a>00251  <span class="keyword">private</span>:
+<a name="l00252"></a>00252   DISALLOW_COPY_AND_ASSIGN(<a class="code" href="classam_1_1_asset_manager_client.html" title="Simple interface for interacting with Asset Manager server.">AssetManagerClient</a>);
+<a name="l00253"></a>00253 
+<a name="l00254"></a>00254   <span class="keyword">enum</span> {
+<a name="l00255"></a>00255     TCP_PORT = 15002,
+<a name="l00256"></a>00256     UDP_PORT = 15003,
+<a name="l00257"></a>00257     MAX_MESSAGE_SIZE = 1500
+<a name="l00258"></a>00258   };
+<a name="l00259"></a>00259 
+<a name="l00260"></a>00260   <span class="keywordtype">void</span> SendCoreMessage(<span class="keyword">const</span> std::vector&lt;char&gt;&amp; msg);
+<a name="l00261"></a>00261   <span class="keywordtype">void</span> NewBundle(std::vector&lt;char&gt;&amp; bundle);
+<a name="l00262"></a>00262   <span class="keywordtype">void</span> AppendBundle(std::vector&lt;char&gt;&amp; bundle, <span class="keyword">const</span> std::vector&lt;char&gt;&amp; message);
 <a name="l00263"></a>00263 
-<a name="l00264"></a>00264   <span class="keywordtype">void</span> SendCoreMessage(<span class="keyword">const</span> std::vector&lt;char&gt;&amp; msg);
-<a name="l00265"></a>00265   <span class="keywordtype">void</span> NewBundle(std::vector&lt;char&gt;&amp; bundle);
-<a name="l00266"></a>00266   <span class="keywordtype">void</span> AppendBundle(std::vector&lt;char&gt;&amp; bundle, <span class="keyword">const</span> std::vector&lt;char&gt;&amp; message);
-<a name="l00267"></a>00267 
-<a name="l00268"></a>00268   std::string base_address_;
-<a name="l00269"></a>00269   <span class="keywordtype">int</span> options_;
-<a name="l00270"></a>00270   TCPClient* tcp_client_;
-<a name="l00271"></a>00271   UDPClient* udp_client_;
-<a name="l00272"></a>00272   <span class="keywordtype">bool</span> start_bundle_;
-<a name="l00273"></a>00273   std::vector&lt;char&gt; tcp_bundle_;
-<a name="l00274"></a>00274   std::vector&lt;char&gt; udp_bundle_;
-<a name="l00275"></a>00275 };
-<a name="l00276"></a>00276 
-<a name="l00277"></a>00277 } <span class="comment">// namespace am</span>
-<a name="l00278"></a>00278 <span class="preprocessor">#endif // _ASSET_MANAGER_CLIENT_HPP_</span>
-<a name="l00279"></a>00279 <span class="preprocessor"></span>
+<a name="l00264"></a>00264   std::string base_address_;
+<a name="l00265"></a>00265   <span class="keywordtype">int</span> options_;
+<a name="l00266"></a>00266   TCPClient* tcp_client_;
+<a name="l00267"></a>00267   UDPClient* udp_client_;
+<a name="l00268"></a>00268   <span class="keywordtype">bool</span> start_bundle_;
+<a name="l00269"></a>00269   std::vector&lt;char&gt; tcp_bundle_;
+<a name="l00270"></a>00270   std::vector&lt;char&gt; udp_bundle_;
+<a name="l00271"></a>00271 };
+<a name="l00272"></a>00272 
+<a name="l00273"></a>00273 } <span class="comment">// namespace am</span>
+<a name="l00274"></a>00274 <span class="preprocessor">#endif // _ASSET_MANAGER_CLIENT_HPP_</span>
+<a name="l00275"></a>00275 <span class="preprocessor"></span>
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="asset__manager__client_8hpp.html">asset_manager_client.hpp</a>      </li>
-      <li class="footer">Generated on Tue Sep 27 2011 15:12:46 for Asset Manager Client Library by&#160;
+      <li class="footer">Generated on Fri Oct 7 2011 17:01:48 for Asset Manager Client Library by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>
