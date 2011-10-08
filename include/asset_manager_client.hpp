@@ -77,13 +77,6 @@ class AssetManagerClient {
       long udp_port=UDP_PORT);
 
   /// @brief Destructor of @a AssetManagerClient.
-  ///
-  /// If option @a SEND_UNLOAD_IN_DESTRUCTOR is set, @a Unload is called.
-  /// By default, the function blocks until all TCP and UDP message queue are
-  /// cleared. The function will return immediately if option @a
-  /// DONOT_CLEAR_QUEUE_IN_DESTRUCTOR is set. Note that if both @a
-  /// SEND_UNLOAD_IN_DESTRUCTOR and @a DONOT_CLEAR_QUEUE_IN_DESTRUCTOR are set,
-  /// @a Unload message may most likely not be delivered successfully.
   ~AssetManagerClient();
 
   /// @brief Set option to change internal behavior.
